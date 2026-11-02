@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f27dae" />
+    <meta
+      name="description"
+      content="Código para acender os olhos de LED da Ardunina com Arduino Uno."
+    />
+    <title>Visão: acenda os olhos | Crie sua Ardunina · Conectadas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:wght@400..800&family=Montserrat:ital,wght@0,400..800;1,400..800&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-missao="visao">
+    <header>
+      <div class="shell topbar">
+        <div class="brand">
+          <img src="img/logo-creme.webp" alt="Conectadas" /><span class="brand-label"
+            >CRIE SUA<br />ARDUNINA!</span
+          >
+        </div>
+        <div class="edition">
+          EIXO ESCOLAS &nbsp;✦&nbsp; MISSÃO DE PROGRAMAÇÃO
+        </div>
+      </div>
+    </header>
+    <main class="shell">
+      <a class="back-link" href="index.html">← Voltar para as missões</a>
+      <div class="banner-padrao">
+        <div class="caixa-texto">
+          <h2>01 · Visão: acenda os olhos</h2>
+          <p>Este código só liga os LEDs.</p>
+        </div>
+      </div>
+      <section class="card montagem">
+            <div class="step">
+              <span class="number">1</span>
+              <h2>Monte os LEDs</h2>
+            </div>
+            <div class="wire-list">
+              <div class="wire">
+                <span class="wire-emoji"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg></span>
+                <div>
+                  <strong>LED esquerdo → D4</strong
+                  ><small
+                    >Resistor de 220 Ω em série; outro terminal no GND</small
+                  >
+                </div>
+              </div>
+              <div class="wire">
+                <span class="wire-emoji"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7-10-7-10-7z" /><circle cx="12" cy="12" r="3" /></svg></span>
+                <div>
+                  <strong>LED direito → D7</strong
+                  ><small
+                    >Resistor de 220 Ω em série; outro terminal no GND</small
+                  >
+                </div>
+              </div>
+            </div>
+          </section>
+      <div class="grid">
+        <section class="card" aria-label="Editor da missão">
+          <div class="step">
+            <span class="number">2</span>
+            <h2>Encontre o erro</h2>
+          </div>
+          <p class="muted">
+            Este código deveria acender os dois olhos, mas tem <strong>1 erro</strong>. Corrija e clique em <strong>Verificar código</strong>.
+          </p>
+          <div class="editor-toolbar">
+            <label for="editor" style="font-size: 0.9rem"
+              ><strong>Editor de código (você pode digitar aqui)</strong></label
+            ><span class="pill" id="score" aria-live="polite"
+              >1 erro para corrigir</span
+            >
+          </div>
+          <textarea
+            id="editor"
+            class="code code-curto"
+            rows="12"
+            spellcheck="false"
+            autocapitalize="off"
+            autocomplete="off"
+            autocorrect="off"
+            aria-describedby="editorHelp"
+          ></textarea>
+          <div id="editorHelp" class="small muted" style="margin: 9px 0 0">
+            Pista: preste atenção em <strong>ponto e vírgula</strong>.
+          </div>
+          <div class="actions">
+            <button type="button" class="btn primary" id="verify">
+              ✓ Verificar código
+            </button>
+            <button
+              type="button"
+              class="btn secondary"
+              id="hints"
+              aria-expanded="false"
+              aria-controls="hintBox"
+            >
+              Ver dica
+            </button>
+            <button type="button" class="btn ghost" id="reset">
+              ↺ Recomeçar
+            </button>
+          </div>
+          <div id="hintBox" class="hint" hidden>
+            <strong>Dica:</strong> Uma instrução <code>pinMode</code> esqueceu um símbolo no final.
+          </div>
+          <div id="feedback" role="status" aria-live="polite">
+            Sua missão está começando. Encontre o erro e verifique sua resposta!
+          </div>
+          <div id="finish" class="finish" aria-live="polite">
+            <h3>Missão concluída! Os olhos estão prontos!</h3>
+            <p>Agora copie ou baixe o código para testar na Arduino IDE.</p>
+            <div class="actions">
+              <button type="button" id="copy" class="btn primary">
+                Copiar código
+              </button>
+              <button type="button" id="download" class="btn secondary">
+                ↓ Baixar código .ino
+              </button>
+            </div>
+            <p id="copyStatus" role="status" style="margin: 11px 0"></p>
+            <p>
+              <a class="back-link" href="voz.html">Próxima missão: Voz →</a><br />
+              <a class="back-link" href="como-funciona.html"
+                >Entenda como este código funciona →</a
+              >
+            </p>
+          </div>
+        </section>
+        <aside class="stack">
+          <section class="card">
+            <div class="step">
+              <span class="number">3</span>
+              <h2>Envie para o Arduino</h2>
+            </div>
+            <ol class="howto">
+              <li>Corrija o erro e conclua a missão.</li>
+              <li>Copie o código ou baixe o arquivo <code>.ino</code>.</li>
+              <li>Abra a <strong>Arduino IDE</strong> no computador.</li>
+              <li>
+                Selecione a placa <strong>Arduino Uno</strong> e a porta USB
+                correta.
+              </li>
+              <li>
+                Clique em <strong>Verificar</strong> e depois em
+                <strong>Carregar</strong>.
+              </li>
+              <li>Os olhos da Ardunina devem acender!</li>
+            </ol>
+          </section>
+        </aside>
+      </div>
+    </main>
+    <footer>
+      <img
+        class="regua"
+        src="img/regua-logos-branca.webp"
+        alt="Realização: Instituto Conecta Brasil. Apoio: Secretaria de Ciência, Tecnologia e Inovação e Governo do Distrito Federal."
+      />
+      <span class="foot-accent">Conectadas · Eixo Escolas</span> &nbsp;•&nbsp;
+      Crie sua Ardunina &nbsp;✦&nbsp; Aprendendo robótica na prática
+    </footer>
+    <script src="js/missoes.js"></script>
+    <script src="js/missao.js"></script>
+  </body>
+</html>

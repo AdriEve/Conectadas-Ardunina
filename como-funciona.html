@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f27dae" />
+    <meta
+      name="description"
+      content="Entenda como o Arduino Uno lê e executa o código da Ardunina."
+    />
+    <title>Como o código funciona | Crie sua Ardunina · Conectadas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:wght@400..800&family=Montserrat:ital,wght@0,400..800;1,400..800&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="shell topbar">
+        <div class="brand">
+          <img src="img/logo-creme.webp" alt="Conectadas" /><span class="brand-label"
+            >CRIE SUA<br />ARDUNINA!</span
+          >
+        </div>
+        <div class="edition">
+          EIXO ESCOLAS &nbsp;✦&nbsp; MISSÃO DE PROGRAMAÇÃO
+        </div>
+      </div>
+    </header>
+    <main class="shell">
+      <a class="back-link" href="index.html">← Voltar para as missões</a>
+      <div class="banner-padrao">
+        <div class="caixa-texto">
+          <h2>Como o código funciona no Arduino</h2>
+          <p>Dá spoiler! Leia depois de tentar as missões.</p>
+        </div>
+      </div>
+
+      <div class="stack">
+        <section class="card">
+          <div class="step">
+            <span class="number">1</span>
+            <h2>Do computador para a placa</h2>
+          </div>
+          <p class="muted">
+            O código é uma lista de instruções. O Arduino não entende o texto
+            que escrevemos, então a Arduino IDE faz a tradução:
+          </p>
+          <ol class="howto">
+            <li>
+              <strong>Verificar:</strong> a IDE confere o código e o traduz para
+              a linguagem da placa. Se houver um erro, como um
+              <code>;</code> faltando, ela avisa aqui.
+            </li>
+            <li>
+              <strong>Carregar:</strong> o programa traduzido vai pelo cabo USB
+              e fica guardado na memória da placa.
+            </li>
+            <li>
+              <strong>Executar:</strong> a placa roda o programa sozinha. Ele
+              continua guardado mesmo depois de desligar, e volta a rodar quando
+              a placa recebe energia.
+            </li>
+          </ol>
+        </section>
+
+        <section class="card">
+          <div class="step">
+            <span class="number">2</span>
+            <h2>As duas partes de todo programa</h2>
+          </div>
+          <p class="muted">
+            O Arduino lê as instruções de cima para baixo, uma de cada vez. Todo
+            programa tem estes dois blocos:
+          </p>
+          <div class="mission-path">
+            <div class="path-card">
+              <div>
+                <div class="path-title">Liga</div>
+                <div class="path-text">A placa recebe energia</div>
+              </div>
+            </div>
+            <div class="path-card">
+              <div>
+                <div class="path-title codigo">setup()</div>
+                <div class="path-text">
+                  Roda <strong>uma vez</strong>: é onde preparamos as peças
+                </div>
+              </div>
+            </div>
+            <div class="path-card">
+              <div>
+                <div class="path-title codigo">loop() ↻</div>
+                <div class="path-text">
+                  Repete <strong>sem parar</strong>, até a placa desligar
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="step">
+            <span class="number">3</span>
+            <h2>Visão: linha por linha</h2>
+          </div>
+          <p class="muted">
+            Os pinos são as portas da placa. Cada peça fica ligada a um pino, e
+            é por ele que o Arduino a controla.
+          </p>
+          <div class="linhas">
+            <div class="linha">
+              <code>const int olhoEsquerdo = 4;</code>
+              <p>
+                Dá um nome ao pino 4. Depois, escrevemos
+                <code>olhoEsquerdo</code> em vez de lembrar o número.
+              </p>
+            </div>
+            <div class="linha">
+              <code>pinMode(olhoEsquerdo, OUTPUT);</code>
+              <p>
+                Avisa que este pino é uma <strong>saída</strong>: o Arduino vai
+                enviar energia por ele.
+              </p>
+            </div>
+            <div class="linha">
+              <code>digitalWrite(olhoEsquerdo, HIGH);</code>
+              <p>
+                Liga o pino: <code>HIGH</code> coloca 5 V nele e o LED acende.
+                Com <code>LOW</code>, ele fica em 0 V e o LED apaga.
+              </p>
+            </div>
+            <div class="linha">
+              <code>void loop() { }</code>
+              <p>
+                Fica vazio, porque o LED já ficou aceso no
+                <code>setup()</code> e não há mais nada para mudar. Mesmo vazio,
+                ele precisa existir.
+              </p>
+            </div>
+          </div>
+          <p class="small"><a href="visao.html">Ir para a missão da Visão →</a></p>
+        </section>
+
+        <section class="card">
+          <div class="step">
+            <span class="number">4</span>
+            <h2>Voz: vibração vira som</h2>
+          </div>
+          <div class="linhas">
+            <div class="linha">
+              <code>tone(boca, 880, 180);</code>
+              <p>
+                Faz o buzzer vibrar <strong>880 vezes por segundo</strong>
+                durante <strong>180 milissegundos</strong>. Quanto mais
+                vibrações, mais agudo é o som.
+              </p>
+            </div>
+            <div class="linha">
+              <code>delay(1000);</code>
+              <p>
+                Faz o programa esperar 1000 milissegundos, ou seja,
+                <strong>1 segundo</strong>. Depois, o <code>loop()</code>
+                recomeça e o buzzer apita de novo.
+              </p>
+            </div>
+          </div>
+          <p class="small"><a href="voz.html">Ir para a missão da Voz →</a></p>
+        </section>
+
+        <section class="card">
+          <div class="step">
+            <span class="number">5</span>
+            <h2>Movimento: o servo vai até um ângulo</h2>
+          </div>
+          <div class="linhas">
+            <div class="linha">
+              <code>#include &lt;Servo.h&gt;</code>
+              <p>
+                Traz uma <strong>biblioteca</strong>: comandos prontos para
+                controlar servos, que já vêm com a Arduino IDE.
+              </p>
+            </div>
+            <div class="linha">
+              <code>Servo pescoco;</code>
+              <p>Cria um servo no programa, com o nome <code>pescoco</code>.</p>
+            </div>
+            <div class="linha">
+              <code>pescoco.attach(pinoPescoco);</code>
+              <p>Informa em qual pino esse servo está ligado.</p>
+            </div>
+            <div class="linha">
+              <code>pescoco.write(75);</code>
+              <p>
+                Manda o servo ir até o ângulo de <strong>75°</strong>. Com
+                <code>90</code>, ele fica no centro.
+              </p>
+            </div>
+            <div class="linha">
+              <code>delay(650);</code>
+              <p>
+                Dá tempo para o servo chegar lá. Sem essa espera, o programa
+                passaria logo para o próximo ângulo e o pescoço quase não se
+                mexeria.
+              </p>
+            </div>
+          </div>
+          <p class="small">
+            <a href="movimento.html">Ir para a missão do Movimento →</a>
+          </p>
+        </section>
+
+        <section class="card">
+          <div class="step">
+            <span class="number">6</span>
+            <h2>Por que um detalhe causa erro?</h2>
+          </div>
+          <p class="muted">
+            O Arduino segue exatamente o que está escrito. Por isso, os três
+            erros da missão impedem o programa de funcionar:
+          </p>
+          <div class="wire-list">
+            <div class="wire">
+              <span class="wire-emoji">;</span>
+              <div>
+                <strong>Ponto e vírgula</strong
+                ><small>Marca o fim de cada instrução, como um ponto final.</small>
+              </div>
+            </div>
+            <div class="wire">
+              <span class="wire-emoji">Aa</span>
+              <div>
+                <strong>Nomes</strong
+                ><small
+                  ><code>boca</code> e <code>bocaa</code> são nomes diferentes,
+                  assim como <code>boca</code> e <code>Boca</code>.</small
+                >
+              </div>
+            </div>
+            <div class="wire">
+              <span class="wire-emoji">( )</span>
+              <div>
+                <strong>Comandos</strong
+                ><small
+                  ><code>write</code> existe, mas <code>writ</code> não. A IDE
+                  mostra o erro ao verificar.</small
+                >
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <h3>Experimente com a turma</h3>
+          <ol class="howto">
+            <li>
+              Troque <code>880</code> por <code>440</code> na Voz. O som fica
+              mais grave?
+            </li>
+            <li>
+              Troque <code>delay(1000)</code> por <code>delay(300)</code>. O que
+              muda no ritmo?
+            </li>
+            <li>
+              Na Visão, troque um <code>HIGH</code> por <code>LOW</code>. Qual
+              olho apaga?
+            </li>
+          </ol>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <img
+        class="regua"
+        src="img/regua-logos-branca.webp"
+        alt="Realização: Instituto Conecta Brasil. Apoio: Secretaria de Ciência, Tecnologia e Inovação e Governo do Distrito Federal."
+      />
+      <span class="foot-accent">Conectadas · Eixo Escolas</span> &nbsp;•&nbsp;
+      Crie sua Ardunina &nbsp;✦&nbsp; Aprendendo robótica na prática
+    </footer>
+  </body>
+</html>

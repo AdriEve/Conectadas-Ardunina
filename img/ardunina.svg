@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 600" role="img" aria-label="Ardunina">
+  <g stroke="#313f1a" stroke-width="10" stroke-linejoin="round" stroke-linecap="round">
+    <!-- Base -->
+    <path fill="#f27dae" d="M92 470 L122 352 C180 300 400 300 458 352 L488 470 C430 560 150 560 92 470 Z" />
+    <path fill="none" d="M122 352 C180 408 400 408 458 352" />
+    <!-- Cabeça -->
+    <circle fill="#f27dae" cx="290" cy="196" r="170" />
+    <ellipse fill="#313f1a" cx="290" cy="56" rx="26" ry="12" />
+    <path fill="none" stroke="#f6f0e4" d="M172 150 C184 114 208 90 240 76" />
+    <!-- Olhos -->
+    <circle fill="#313f1a" cx="208" cy="192" r="34" />
+    <circle fill="#313f1a" cx="372" cy="192" r="34" />
+    <!-- Boca -->
+    <path fill="#313f1a" d="M250 252 C270 262 310 262 330 252 C330 300 250 300 250 252 Z" />
+    <!-- Servo -->
+    <rect fill="#e3ccff" x="428" y="392" width="104" height="104" rx="12" />
+    <rect fill="#f75f41" x="404" y="414" width="24" height="26" rx="5" />
+    <rect fill="#f75f41" x="532" y="414" width="24" height="26" rx="5" />
+    <rect fill="#313f1a" x="466" y="366" width="28" height="28" rx="4" />
+    <path fill="#f6f0e4" d="M408 354 C430 346 460 348 480 354 C500 348 530 346 552 354 C552 374 530 376 480 374 C430 376 408 374 408 354 Z" />
+    <circle fill="#313f1a" stroke="none" cx="480" cy="363" r="7" />
+  </g>
+  <!-- Brilho dos olhos, língua e bochechas -->
+  <circle fill="#f6f0e4" cx="220" cy="178" r="11" />
+  <circle fill="#f6f0e4" cx="384" cy="178" r="11" />
+  <circle fill="#f6f0e4" cx="196" cy="206" r="5" />
+  <circle fill="#f6f0e4" cx="360" cy="206" r="5" />
+  <ellipse fill="#f27dae" cx="290" cy="276" rx="19" ry="9" />
+  <ellipse fill="#f75f41" cx="160" cy="246" rx="24" ry="12" />
+  <ellipse fill="#f75f41" cx="420" cy="246" rx="24" ry="12" />
+</svg>

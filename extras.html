@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f27dae" />
+    <meta
+      name="description"
+      content="Códigos diferentes para a Ardunina cantar, piscar, dançar e falar."
+    />
+    <title>Ardunina em ação | Crie sua Ardunina · Conectadas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:wght@400..800&family=Montserrat:ital,wght@0,400..800;1,400..800&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="shell topbar">
+        <div class="brand">
+          <img src="img/logo-creme.webp" alt="Conectadas" /><span class="brand-label"
+            >CRIE SUA<br />ARDUNINA!</span
+          >
+        </div>
+        <div class="edition">
+          EIXO ESCOLAS &nbsp;✦&nbsp; MISSÃO DE PROGRAMAÇÃO
+        </div>
+      </div>
+    </header>
+    <main class="shell">
+      <a class="back-link" href="index.html">← Voltar para as missões</a>
+      <div class="banner-padrao">
+        <div class="caixa-texto">
+          <h2>Ardunina em ação</h2>
+          <p>Códigos prontos para testar depois das missões. Copie, envie para o Arduino e mude o que quiser!</p>
+        </div>
+      </div>
+      <div class="extras">
+        <section class="card" data-arquivo="ArduninaCanta.ino">
+          <h2>A Ardunina canta</h2>
+          <p class="pecas">Peças: Buzzer (D9) e LEDs (D4 e D7)</p>
+          <p class="muted">Ela canta <strong>Brilha, brilha, estrelinha</strong>, e os olhos piscam a cada nota.</p>
+          <pre class="code" tabindex="0" aria-label="Código: A Ardunina canta">const int olhoEsquerdo = 4;
+const int olhoDireito = 7;
+const int boca = 9;
+
+// Notas de "Brilha, brilha, estrelinha" (vibrações por segundo)
+const int notas[] = {
+  523, 523, 784, 784, 880, 880, 784,
+  698, 698, 659, 659, 587, 587, 523
+};
+// Duração de cada nota, em milissegundos
+const int tempos[] = {
+  400, 400, 400, 400, 400, 400, 800,
+  400, 400, 400, 400, 400, 400, 800
+};
+const int totalDeNotas = 14;
+
+void setup() {
+  pinMode(olhoEsquerdo, OUTPUT);
+  pinMode(olhoDireito, OUTPUT);
+  pinMode(boca, OUTPUT);
+}
+
+void loop() {
+  for (int i = 0; i &lt; totalDeNotas; i++) {
+    digitalWrite(olhoEsquerdo, HIGH);
+    digitalWrite(olhoDireito, HIGH);
+    tone(boca, notas[i], tempos[i]);
+    delay(tempos[i]);
+    digitalWrite(olhoEsquerdo, LOW);
+    digitalWrite(olhoDireito, LOW);
+    delay(60);
+  }
+  delay(2000);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p><code>notas[]</code> é uma lista de números. O <code>for</code> percorre a lista e toca uma nota de cada vez.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Troque os números de <code>notas[]</code> para inventar outra música.</p>
+        </section>
+        <section class="card" data-arquivo="ArduninaPisca.ino">
+          <h2>A Ardunina pisca</h2>
+          <p class="pecas">Peças: LEDs (D4 e D7)</p>
+          <p class="muted">Os olhos ficam acesos, e ela dá uma piscadinha com cada olho.</p>
+          <pre class="code" tabindex="0" aria-label="Código: A Ardunina pisca">const int olhoEsquerdo = 4;
+const int olhoDireito = 7;
+
+void setup() {
+  pinMode(olhoEsquerdo, OUTPUT);
+  pinMode(olhoDireito, OUTPUT);
+  digitalWrite(olhoEsquerdo, HIGH);
+  digitalWrite(olhoDireito, HIGH);
+}
+
+void loop() {
+  delay(2000);
+  digitalWrite(olhoEsquerdo, LOW);
+  delay(250);
+  digitalWrite(olhoEsquerdo, HIGH);
+  delay(2000);
+  digitalWrite(olhoDireito, LOW);
+  delay(250);
+  digitalWrite(olhoDireito, HIGH);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p>Apagar um olho de cada vez cria uma piscadinha. O <code>delay()</code> define quanto tempo ela dura.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Mude os valores de <code>delay()</code> para ela piscar mais rápido.</p>
+        </section>
+        <section class="card" data-arquivo="ArduninaDanca.ino">
+          <h2>A Ardunina dança</h2>
+          <p class="pecas">Peças: Servo (D11) e LEDs (D4 e D7)</p>
+          <p class="muted">O pescoço balança no ritmo, e um olho acende de cada vez.</p>
+          <pre class="code" tabindex="0" aria-label="Código: A Ardunina dança">#include &lt;Servo.h&gt;
+
+const int olhoEsquerdo = 4;
+const int olhoDireito = 7;
+const int pinoPescoco = 11;
+
+Servo pescoco;
+
+void setup() {
+  pinMode(olhoEsquerdo, OUTPUT);
+  pinMode(olhoDireito, OUTPUT);
+  pescoco.attach(pinoPescoco);
+  pescoco.write(90);
+}
+
+void loop() {
+  digitalWrite(olhoEsquerdo, HIGH);
+  digitalWrite(olhoDireito, LOW);
+  pescoco.write(70);
+  delay(400);
+  digitalWrite(olhoEsquerdo, LOW);
+  digitalWrite(olhoDireito, HIGH);
+  pescoco.write(110);
+  delay(400);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p>Várias peças mudam juntas: cada passo da dança define os dois olhos e o ângulo do pescoço.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Troque <code>400</code> por <code>200</code>. A dança fica mais animada?</p>
+        </section>
+        <section class="card" data-arquivo="ArduninaFala.ino">
+          <h2>A Ardunina fala robô</h2>
+          <p class="pecas">Peças: Buzzer (D9)</p>
+          <p class="muted">Ela faz sons de robô, e cada frase sai diferente da anterior.</p>
+          <pre class="code" tabindex="0" aria-label="Código: A Ardunina fala robô">const int boca = 9;
+
+void setup() {
+  pinMode(boca, OUTPUT);
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+  int sons = random(3, 8);
+  for (int i = 0; i &lt; sons; i++) {
+    int duracao = random(60, 180);
+    tone(boca, random(400, 1400), duracao);
+    delay(duracao + 30);
+  }
+  delay(random(800, 2000));
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p><code>random()</code> sorteia um número. Assim, a altura, a duração e a quantidade de sons mudam sozinhas.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Mude os limites de <code>random(400, 1400)</code>. A voz fica mais grave ou mais aguda?</p>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <img
+        class="regua"
+        src="img/regua-logos-branca.webp"
+        alt="Realização: Instituto Conecta Brasil. Apoio: Secretaria de Ciência, Tecnologia e Inovação e Governo do Distrito Federal."
+      />
+      <span class="foot-accent">Conectadas · Eixo Escolas</span> &nbsp;•&nbsp;
+      Crie sua Ardunina &nbsp;✦&nbsp; Aprendendo robótica na prática
+    </footer>
+    <script src="js/missoes.js"></script>
+    <script src="js/extras.js"></script>
+  </body>
+</html>
