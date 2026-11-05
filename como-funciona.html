@@ -41,6 +41,56 @@
       </div>
 
       <div class="stack">
+        <section class="card resumo" aria-label="Resumo em 1 minuto">
+          <h2>Em 1 minuto</h2>
+          <p class="muted">
+            O código é uma <strong>receita</strong>: o Arduino faz exatamente o
+            que está escrito, na ordem.
+          </p>
+          <div class="linhas">
+            <div class="linha">
+              <code>setup()</code>
+              <p>Roda <strong>uma vez</strong>, quando o Arduino liga. É o preparar os ingredientes.</p>
+            </div>
+            <div class="linha">
+              <code>loop()</code>
+              <p>Repete <strong>para sempre</strong>. É o faça de novo e de novo.</p>
+            </div>
+            <div class="linha">
+              <code>digitalWrite(4, HIGH);</code>
+              <p>Liga o pino 4: o olho acende. Com <code>LOW</code>, ele apaga.</p>
+            </div>
+            <div class="linha">
+              <code>delay(1000);</code>
+              <p>Espera 1 segundo.</p>
+            </div>
+            <div class="linha">
+              <code>;</code>
+              <p>Termina cada instrução, como o ponto final de uma frase.</p>
+            </div>
+          </div>
+          <h3>Teste rápido: o que este código faz?</h3>
+          <pre class="code code-curto" tabindex="0" aria-label="Código do teste rápido">
+void setup() {
+  pinMode(4, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(4, HIGH);
+  delay(1000);
+  digitalWrite(4, LOW);
+  delay(1000);
+}</pre
+          >
+          <details class="resposta">
+            <summary>Ver resposta</summary>
+            <p>
+              O olho do pino 4 <strong>pisca a cada 1 segundo, para sempre</strong>:
+              acende, espera, apaga, espera, e o <code>loop()</code> recomeça.
+            </p>
+          </details>
+        </section>
+
         <section class="card">
           <div class="step">
             <span class="number">1</span>

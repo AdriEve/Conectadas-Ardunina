@@ -749,3 +749,28 @@ a.btn {
 .montagem .wire-list {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
+
+/* Resumo "Em 1 minuto" da página Como o código funciona */
+.resumo h2 {
+  margin-bottom: 10px;
+}
+.resumo h3 {
+  margin: 22px 0 10px;
+}
+.resposta {
+  margin-top: 14px;
+  background: var(--lime);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+.resposta summary {
+  cursor: pointer;
+  font-family: var(--font-destaque);
+  font-weight: 800;
+}
+.resposta p {
+  margin: 10px 0 0;
+}
+.resposta code {
+  background: var(--cream);
+}
