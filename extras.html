@@ -195,6 +195,73 @@ void loop() {
           </div>
           <p class="small"><strong>Experimente:</strong> Mude os limites de <code>random(400, 1400)</code>. A voz fica mais grave ou mais aguda?</p>
         </section>
+        <section class="card card-show" data-arquivo="ArduninaShow.ino">
+          <h2>O show da Ardunina</h2>
+          <p class="pecas">Peças: todas! Buzzer (D9), LEDs (D4 e D7) e servo (D11)</p>
+          <p class="muted">Ela canta uma música de videogame, dança balançando o pescoço e pisca um olho de cada vez, tudo no mesmo ritmo.</p>
+          <pre class="code" tabindex="0" aria-label="Código: O show da Ardunina">#include &lt;Servo.h&gt;
+
+const int olhoEsquerdo = 4;
+const int olhoDireito = 7;
+const int boca = 9;
+const int pinoPescoco = 11;
+
+Servo pescoco;
+
+// Melodia de videogame criada para a Ardunina (0 = pausa)
+const int notas[] = {
+  659, 784, 1047, 784, 659, 587,
+  698, 880, 1175, 880, 698, 659,
+  587, 659, 698, 784, 880, 988, 1047, 0
+};
+// Duração de cada nota, em milissegundos
+const int tempos[] = {
+  150, 150, 300, 150, 150, 300,
+  150, 150, 300, 150, 150, 300,
+  150, 150, 150, 150, 150, 150, 450, 300
+};
+const int totalDeNotas = 20;
+
+void setup() {
+  pinMode(olhoEsquerdo, OUTPUT);
+  pinMode(olhoDireito, OUTPUT);
+  pinMode(boca, OUTPUT);
+  pescoco.attach(pinoPescoco);
+  pescoco.write(90);
+}
+
+void loop() {
+  for (int i = 0; i &lt; totalDeNotas; i++) {
+    if (i % 2 == 0) {
+      digitalWrite(olhoEsquerdo, HIGH);
+      digitalWrite(olhoDireito, LOW);
+      pescoco.write(70);
+    } else {
+      digitalWrite(olhoEsquerdo, LOW);
+      digitalWrite(olhoDireito, HIGH);
+      pescoco.write(110);
+    }
+    if (notas[i] &gt; 0) {
+      tone(boca, notas[i], tempos[i] - 20);
+    }
+    delay(tempos[i]);
+  }
+  digitalWrite(olhoEsquerdo, HIGH);
+  digitalWrite(olhoDireito, HIGH);
+  pescoco.write(90);
+  delay(1500);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p>A cada nota, o código troca o olho aceso e o lado do pescoço. <code>i % 2 == 0</code> descobre se a nota é par ou ímpar, e é isso que faz a dança ir de um lado para o outro.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Troque os números de <code>notas[]</code> para criar a sua própria música de videogame. Com <code>0</code>, a Ardunina faz uma pausa.</p>
+        </section>
       </div>
     </main>
     <footer>

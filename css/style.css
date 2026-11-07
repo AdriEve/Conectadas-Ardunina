@@ -774,3 +774,8 @@ a.btn {
 .resposta code {
   background: var(--cream);
 }
+
+/* O show da Ardunina ocupa a largura toda, como encerramento da página */
+.card-show {
+  grid-column: 1 / -1;
+}
