@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#f27dae" />
     <meta
       name="description"
-      content="A Ardunina com sensor de luz, ultrassônico, joystick, LED RGB e sensor de temperatura."
+      content="A Ardunina com sensor de luz, ultrassônico, joystick, LED RGB e sensor de presença."
     />
     <title>Novos sentidos | Crie sua Ardunina · Conectadas</title>
     <link rel="icon" type="image/png" href="img/favicon.png" />
@@ -36,7 +36,7 @@
       <div class="banner-padrao">
         <div class="caixa-texto">
           <h2>Novos sentidos</h2>
-          <p>A Ardunina ganha 6 componentes novos. Monte as ligações, copie o código e envie para o Arduino!</p>
+          <p>A Ardunina ganha 5 componentes novos. Monte as ligações, copie o código e envie para o Arduino!</p>
         </div>
       </div>
       <p class="aviso-componentes"><strong>Antes de montar:</strong> desligue o cabo USB. Cada código usa um componente; troque as peças e envie o código dele.</p>
@@ -289,69 +289,6 @@ void loop() {
             <p>A função <code>cor(r, g, b)</code> mistura vermelho, verde e azul: <code>1</code> liga a cor e <code>0</code> desliga. Usamos liga e desliga porque o buzzer e o servo atrapalham o <code>analogWrite()</code> em alguns pinos.</p>
           </div>
           <p class="small"><strong>Experimente:</strong> Tente <code>cor(1, 1, 0)</code> e <code>cor(1, 0, 1)</code>. Que cores aparecem?</p>
-        </section>
-        <section class="card" data-arquivo="ArduninaTemperatura.ino">
-          <p class="etiqueta-componente">Sensor de temperatura (LM35)</p>
-          <h2>A Ardunina sente o calor</h2>
-          <p class="pecas">Peças: sensor LM35, LEDs (D4 e D7), buzzer (D9) e servo (D11)</p>
-          <p class="muted">Ela mostra a temperatura no Monitor Serial. Acima de 30 °C, os olhos acendem, ela apita e balança o pescoço como se estivesse se abanando.</p>
-          <figure class="foto-componente">
-            <img src="img/componentes/lm35.png" alt="Desenho do LM35 de frente, com o lado reto para você, e as pernas 5V, A3 e GND" width="440" height="600" loading="lazy" />
-            <figcaption>Confira o nome de cada pino antes de ligar os fios.</figcaption>
-          </figure>
-          <h3 class="ligacoes-titulo">Ligações</h3>
-          <ul class="ligacoes">
-            <li><strong>LM35 com o lado reto para você</strong></li>
-            <li><strong>Perna da esquerda</strong> → 5V</li>
-            <li><strong>Perna do meio</strong> → pino A3</li>
-            <li><strong>Perna da direita</strong> → GND</li>
-          </ul>
-          <pre class="code" tabindex="0" aria-label="Código: A Ardunina sente o calor">#include &lt;Servo.h&gt;
-
-const int sensorTemp = A3;
-const int olhoEsquerdo = 4;
-const int olhoDireito = 7;
-const int boca = 9;
-const int pinoPescoco = 11;
-
-Servo pescoco;
-
-void setup() {
-  Serial.begin(9600);
-  pinMode(olhoEsquerdo, OUTPUT);
-  pinMode(olhoDireito, OUTPUT);
-  pinMode(boca, OUTPUT);
-  pescoco.attach(pinoPescoco);
-}
-
-void loop() {
-  int leitura = analogRead(sensorTemp);
-  float temperatura = leitura * 0.49;
-  Serial.println(temperatura);
-  if (temperatura &gt; 30) {
-    digitalWrite(olhoEsquerdo, HIGH);
-    digitalWrite(olhoDireito, HIGH);
-    tone(boca, 880, 200);
-    pescoco.write(60);
-    delay(300);
-    pescoco.write(120);
-  } else {
-    digitalWrite(olhoEsquerdo, LOW);
-    digitalWrite(olhoDireito, LOW);
-    pescoco.write(90);
-  }
-  delay(1000);
-}</pre>
-          <div class="actions">
-            <button type="button" class="btn primary copiar">Copiar código</button>
-            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
-          </div>
-          <p class="small" role="status"></p>
-          <div class="side-callout">
-            <strong>O que tem de novo?</strong>
-            <p><code>leitura * 0.49</code> transforma a leitura em graus. <code>Serial.println()</code> mostra o valor em <strong>Ferramentas → Monitor Serial</strong>.</p>
-          </div>
-          <p class="small"><strong>Experimente:</strong> Segure o sensor com os dedos. A temperatura sobe? Mude o <code>30</code> para ela apitar antes.</p>
         </section>
         <section class="card" data-arquivo="ArduninaPresenca.ino">
           <p class="etiqueta-componente">Sensor de presença (HC-SR501)</p>
