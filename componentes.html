@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f27dae" />
+    <meta
+      name="description"
+      content="A Ardunina com sensor de luz, ultrassônico, joystick, LED RGB e sensor de temperatura."
+    />
+    <title>Novos sentidos | Crie sua Ardunina · Conectadas</title>
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bricolage+Grotesque:wght@400..800&family=Montserrat:ital,wght@0,400..800;1,400..800&display=swap"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="shell topbar">
+        <div class="brand">
+          <img src="img/logo-creme.webp" alt="Conectadas" /><span class="brand-label"
+            >CRIE SUA<br />ARDUNINA!</span
+          >
+        </div>
+        <div class="edition">
+          EIXO 1 ESCOLAS &nbsp;✦&nbsp; MISSÃO DE PROGRAMAÇÃO
+        </div>
+      </div>
+    </header>
+    <main class="shell">
+      <a class="back-link" href="index.html">← Voltar para as missões</a>
+      <div class="banner-padrao">
+        <div class="caixa-texto">
+          <h2>Novos sentidos</h2>
+          <p>A Ardunina ganha 5 componentes novos. Monte as ligações, copie o código e envie para o Arduino!</p>
+        </div>
+      </div>
+      <p class="aviso-componentes"><strong>Antes de montar:</strong> desligue o cabo USB. Cada código usa um componente; troque as peças e envie o código dele.</p>
+      <div class="extras">
+        <section class="card" data-arquivo="ArduninaLuz.ino">
+          <p class="etiqueta-componente">Sensor de luz (LDR)</p>
+          <h2>A Ardunina enxerga o escuro</h2>
+          <p class="pecas">Peças: LDR, resistor de 10 kΩ e LEDs (D4 e D7)</p>
+          <p class="muted">Quando a sala fica escura, os olhos da Ardunina acendem sozinhos.</p>
+          <h3 class="ligacoes-titulo">Ligações</h3>
+          <ul class="ligacoes">
+            <li><strong>Perna 1 do LDR</strong> → 5V</li>
+            <li><strong>Perna 2 do LDR</strong> → pino A0</li>
+            <li><strong>Resistor de 10 kΩ</strong> → entre o pino A0 e o GND</li>
+          </ul>
+          <pre class="code" tabindex="0" aria-label="Código: A Ardunina enxerga o escuro">const int sensorLuz = A0;
+const int olhoEsquerdo = 4;
+const int olhoDireito = 7;
+
+void setup() {
+  pinMode(olhoEsquerdo, OUTPUT);
+  pinMode(olhoDireito, OUTPUT);
+}
+
+void loop() {
+  int luz = analogRead(sensorLuz);
+  if (luz &lt; 300) {
+    digitalWrite(olhoEsquerdo, HIGH);
+    digitalWrite(olhoDireito, HIGH);
+  } else {
+    digitalWrite(olhoEsquerdo, LOW);
+    digitalWrite(olhoDireito, LOW);
+  }
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p><code>analogRead()</code> lê um número de 0 (escuro) a 1023 (muito claro). Abaixo de <code>300</code>, o <code>if</code> acende os olhos.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Mude <code>300</code> para outro número. Com quanto de luz os olhos acendem?</p>
+        </section>
+        <section class="card" data-arquivo="ArduninaUltrassonico.ino">
+          <p class="etiqueta-componente">Sensor ultrassônico</p>
+          <h2>A Ardunina sente quem chega perto</h2>
+          <p class="pecas">Peças: sensor ultrassônico HC-SR04 e buzzer (D9)</p>
+          <p class="muted">Ela apita quando alguma coisa chega a menos de 15 cm.</p>
+          <h3 class="ligacoes-titulo">Ligações</h3>
+          <ul class="ligacoes">
+            <li><strong>VCC</strong> → 5V</li>
+            <li><strong>TRIG</strong> → pino 8</li>
+            <li><strong>ECHO</strong> → pino 12</li>
+            <li><strong>GND</strong> → GND</li>
+          </ul>
+          <pre class="code" tabindex="0" aria-label="Código: A Ardunina sente quem chega perto">const int trig = 8;
+const int echo = 12;
+const int boca = 9;
+
+void setup() {
+  pinMode(trig, OUTPUT);
+  pinMode(echo, INPUT);
+  pinMode(boca, OUTPUT);
+}
+
+void loop() {
+  digitalWrite(trig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trig, LOW);
+  long tempo = pulseIn(echo, HIGH);
+  int distancia = tempo * 0.034 / 2;
+  if (distancia &lt; 15) {
+    tone(boca, 880, 100);
+  }
+  delay(200);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p>O TRIG solta um som que a gente não ouve. O som bate no objeto e volta para o ECHO. <code>pulseIn()</code> mede quanto tempo isso levou, e a conta transforma o tempo em centímetros.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Troque <code>15</code> por <code>30</code>. Agora ela percebe você mais de longe?</p>
+        </section>
+        <section class="card" data-arquivo="ArduninaJoystick.ino">
+          <p class="etiqueta-componente">Joystick</p>
+          <h2>Você controla o pescoço da Ardunina</h2>
+          <p class="pecas">Peças: joystick e servo (D11)</p>
+          <p class="muted">Mexa o joystick para os lados e o pescoço vira junto.</p>
+          <h3 class="ligacoes-titulo">Ligações</h3>
+          <ul class="ligacoes">
+            <li><strong>GND</strong> → GND</li>
+            <li><strong>+5V</strong> → 5V</li>
+            <li><strong>VRx</strong> → pino A1</li>
+            <li><strong>VRy e SW</strong> → ficam livres</li>
+          </ul>
+          <pre class="code" tabindex="0" aria-label="Código: Você controla o pescoço da Ardunina">#include &lt;Servo.h&gt;
+
+const int eixoX = A1;
+const int pinoPescoco = 11;
+
+Servo pescoco;
+
+void setup() {
+  pescoco.attach(pinoPescoco);
+}
+
+void loop() {
+  int x = analogRead(eixoX);
+  int angulo = map(x, 0, 1023, 0, 180);
+  pescoco.write(angulo);
+  delay(15);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p><code>map()</code> converte a leitura do joystick (0 a 1023) em um ângulo do servo (0° a 180°).</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Troque <code>0, 180</code> por <code>45, 135</code>. O pescoço vira menos?</p>
+        </section>
+        <section class="card" data-arquivo="ArduninaLedRGB.ino">
+          <p class="etiqueta-componente">LED RGB</p>
+          <h2>Os olhos da Ardunina mudam de cor</h2>
+          <p class="pecas">Peças: LED RGB (cátodo comum) e 3 resistores de 220 Ω</p>
+          <p class="muted">O LED passa por vermelho, verde, azul e roxo.</p>
+          <h3 class="ligacoes-titulo">Ligações</h3>
+          <ul class="ligacoes">
+            <li><strong>Perna maior</strong> → GND</li>
+            <li><strong>R</strong> → resistor → pino 5</li>
+            <li><strong>G</strong> → resistor → pino 6</li>
+            <li><strong>B</strong> → resistor → pino 3</li>
+          </ul>
+          <pre class="code" tabindex="0" aria-label="Código: Os olhos da Ardunina mudam de cor">const int vermelho = 5;
+const int verde = 6;
+const int azul = 3;
+
+void setup() {
+}
+
+void cor(int r, int g, int b) {
+  analogWrite(vermelho, r);
+  analogWrite(verde, g);
+  analogWrite(azul, b);
+}
+
+void loop() {
+  cor(255, 0, 0);   delay(1000);
+  cor(0, 255, 0);   delay(1000);
+  cor(0, 0, 255);   delay(1000);
+  cor(255, 0, 255); delay(1000);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p>A função <code>cor(r, g, b)</code> mistura vermelho, verde e azul. Cada número vai de 0 (apagado) a 255 (bem forte).</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Tente <code>cor(255, 255, 0)</code>. Que cor aparece?</p>
+        </section>
+        <section class="card" data-arquivo="ArduninaTemperatura.ino">
+          <p class="etiqueta-componente">Sensor de temperatura (LM35)</p>
+          <h2>A Ardunina sente o calor</h2>
+          <p class="pecas">Peças: sensor LM35 e buzzer (D9)</p>
+          <p class="muted">Ela mostra a temperatura no Monitor Serial e apita quando passa de 30 °C.</p>
+          <h3 class="ligacoes-titulo">Ligações</h3>
+          <ul class="ligacoes">
+            <li><strong>LM35 com o lado reto para você</strong></li>
+            <li><strong>Perna da esquerda</strong> → 5V</li>
+            <li><strong>Perna do meio</strong> → pino A3</li>
+            <li><strong>Perna da direita</strong> → GND</li>
+          </ul>
+          <pre class="code" tabindex="0" aria-label="Código: A Ardunina sente o calor">const int sensorTemp = A3;
+const int boca = 9;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(boca, OUTPUT);
+}
+
+void loop() {
+  int leitura = analogRead(sensorTemp);
+  float temperatura = leitura * 0.49;
+  Serial.println(temperatura);
+  if (temperatura &gt; 30) {
+    tone(boca, 880, 200);
+  }
+  delay(1000);
+}</pre>
+          <div class="actions">
+            <button type="button" class="btn primary copiar">Copiar código</button>
+            <button type="button" class="btn secondary baixar">↓ Baixar código .ino</button>
+          </div>
+          <p class="small" role="status"></p>
+          <div class="side-callout">
+            <strong>O que tem de novo?</strong>
+            <p><code>leitura * 0.49</code> transforma a leitura em graus. <code>Serial.println()</code> mostra o valor em <strong>Ferramentas → Monitor Serial</strong>.</p>
+          </div>
+          <p class="small"><strong>Experimente:</strong> Segure o sensor com os dedos. A temperatura sobe? Mude o <code>30</code> para ela apitar antes.</p>
+        </section>
+      </div>
+    </main>
+    <footer>
+      <img
+        class="regua"
+        src="img/regua-logos-branca.webp"
+        alt="Realização: Instituto Conecta Brasil. Apoio: Secretaria de Ciência, Tecnologia e Inovação e Governo do Distrito Federal."
+      />
+      <span class="foot-accent">Conectadas · Eixo 1 Escolas</span> &nbsp;•&nbsp;
+      Crie sua Ardunina &nbsp;✦&nbsp; Aprendendo robótica na prática
+    </footer>
+    <script src="js/missoes.js"></script>
+    <script src="js/extras.js"></script>
+  </body>
+</html>

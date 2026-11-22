@@ -779,3 +779,36 @@ a.btn {
 .card-show {
   grid-column: 1 / -1;
 }
+
+/* Página Novos sentidos: componentes novos da Ardunina */
+.etiqueta-componente {
+  display: inline-block;
+  margin: 0;
+  background: var(--pink);
+  color: var(--olive);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-family: var(--font-destaque);
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+.ligacoes-titulo {
+  font-family: var(--font-destaque);
+  font-size: 1rem;
+  margin: 14px 0 6px;
+}
+.ligacoes {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 12px 16px;
+  background: var(--lime);
+  border-radius: 12px;
+}
+.ligacoes li {
+  margin: 4px 0;
+}
+.aviso-componentes {
+  background: var(--lavender);
+  border-radius: 13px;
+  padding: 12px 16px;
+}
