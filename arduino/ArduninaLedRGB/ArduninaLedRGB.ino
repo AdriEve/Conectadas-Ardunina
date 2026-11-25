@@ -16,10 +16,12 @@ void setup() {
   pescoco.attach(pinoPescoco);
 }
 
+// LED de ânodo comum: a perna maior vai no 5V
+// e cada cor acende com LOW. O ! inverte: 1 vira LOW.
 void cor(int r, int g, int b) {
-  digitalWrite(vermelho, r);
-  digitalWrite(verde, g);
-  digitalWrite(azul, b);
+  digitalWrite(vermelho, !r);
+  digitalWrite(verde, !g);
+  digitalWrite(azul, !b);
 }
 
 void loop() {

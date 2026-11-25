@@ -165,23 +165,26 @@ void loop() {
         </section>
         <section class="card" data-arquivo="ArduninaJoystick.ino">
           <p class="etiqueta-componente">Joystick</p>
-          <h2>Você controla o pescoço da Ardunina</h2>
+          <h2>Você controla a Ardunina</h2>
           <p class="pecas">Peças: joystick, servo (D11), LEDs (D4 e D7) e buzzer (D9)</p>
-          <p class="muted">Mexa o joystick para os lados e o pescoço vira junto. Nas pontas, o olho daquele lado acende e ela apita.</p>
+          <p class="muted">Para os lados, o pescoço vira. Para cima e para baixo, acende um olho de cada vez. Apertando o botão do joystick, ela canta.</p>
           <figure class="foto-componente">
             <img src="img/componentes/joystick.png" alt="Desenho do joystick com os pinos GND, +5V, VRx, VRy e SW" width="560" height="560" loading="lazy" />
             <figcaption>Confira o nome de cada pino antes de ligar os fios.</figcaption>
           </figure>
           <h3 class="ligacoes-titulo">Ligações</h3>
           <ul class="ligacoes">
-            <li><strong>GND</strong> → GND</li>
-            <li><strong>+5V</strong> → 5V</li>
             <li><strong>VRx</strong> → pino A1</li>
-            <li><strong>VRy e SW</strong> → ficam livres</li>
+            <li><strong>VRy</strong> → pino A0</li>
+            <li><strong>SW</strong> → pino 2</li>
+            <li><strong>+5V</strong> → 5V</li>
+            <li><strong>GND</strong> → GND</li>
           </ul>
-          <pre class="code" tabindex="0" aria-label="Código: Você controla o pescoço da Ardunina">#include &lt;Servo.h&gt;
+          <pre class="code" tabindex="0" aria-label="Código: Você controla a Ardunina">#include &lt;Servo.h&gt;
 
 const int eixoX = A1;
+const int eixoY = A0;
+const int botao = 2;
 const int olhoEsquerdo = 4;
 const int olhoDireito = 7;
 const int boca = 9;
@@ -193,25 +196,27 @@ void setup() {
   pinMode(olhoEsquerdo, OUTPUT);
   pinMode(olhoDireito, OUTPUT);
   pinMode(boca, OUTPUT);
+  pinMode(botao, INPUT_PULLUP);   // apertado = LOW
   pescoco.attach(pinoPescoco);
 }
 
 void loop() {
+  // Pescoço no eixo X
   int x = analogRead(eixoX);
-  int angulo = map(x, 0, 1023, 0, 180);
-  pescoco.write(angulo);
-  if (angulo &lt; 45) {
-    digitalWrite(olhoEsquerdo, HIGH);
-    tone(boca, 440, 50);
+  pescoco.write(map(x, 0, 1023, 0, 180));
+
+  // Olhos no eixo Y (centro fica perto de 512)
+  int y = analogRead(eixoY);
+  digitalWrite(olhoEsquerdo, y &lt; 300 ? HIGH : LOW);
+  digitalWrite(olhoDireito,  y &gt; 700 ? HIGH : LOW);
+
+  // Buzzer no botão do joystick
+  if (digitalRead(botao) == LOW) {
+    tone(boca, 660);
   } else {
-    digitalWrite(olhoEsquerdo, LOW);
+    noTone(boca);
   }
-  if (angulo &gt; 135) {
-    digitalWrite(olhoDireito, HIGH);
-    tone(boca, 880, 50);
-  } else {
-    digitalWrite(olhoDireito, LOW);
-  }
+
   delay(15);
 }</pre>
           <div class="actions">
@@ -221,22 +226,22 @@ void loop() {
           <p class="small" role="status"></p>
           <div class="side-callout">
             <strong>O que tem de novo?</strong>
-            <p><code>map()</code> converte a leitura do joystick (0 a 1023) em um ângulo do servo (0° a 180°). Os dois <code>if</code> conferem se o pescoço chegou perto de uma das pontas.</p>
+            <p><code>map()</code> converte o eixo X (0 a 1023) em um ângulo do servo (0° a 180°). <code>y &lt; 300 ? HIGH : LOW</code> é um <code>if</code> curtinho. Com <code>INPUT_PULLUP</code>, o botão fica <code>HIGH</code> solto e <code>LOW</code> apertado; <code>noTone()</code> faz o som parar.</p>
           </div>
-          <p class="small"><strong>Experimente:</strong> Troque <code>45</code> e <code>135</code> por outros números. Os olhos acendem mais cedo ou mais tarde?</p>
+          <p class="small"><strong>Experimente:</strong> Troque <code>660</code> por outro número. A voz fica mais grave ou mais aguda?</p>
         </section>
         <section class="card" data-arquivo="ArduninaLedRGB.ino">
           <p class="etiqueta-componente">LED RGB</p>
           <h2>Os olhos da Ardunina mudam de cor</h2>
-          <p class="pecas">Peças: LED RGB (cátodo comum), 3 resistores de 220 Ω, buzzer (D9) e servo (D11)</p>
+          <p class="pecas">Peças: LED RGB (ânodo comum), 3 resistores de 220 Ω, buzzer (D9) e servo (D11)</p>
           <p class="muted">O LED passa por vermelho, verde e azul. A cada cor, ela canta uma nota e vira o pescoço.</p>
           <figure class="foto-componente">
-            <img src="img/componentes/led-rgb.png" alt="Desenho do LED RGB com as pernas R, GND (a mais comprida), G e B" width="460" height="600" loading="lazy" />
+            <img src="img/componentes/led-rgb.png" alt="Desenho do LED RGB com as pernas R, 5V (a mais comprida), G e B" width="460" height="600" loading="lazy" />
             <figcaption>Confira o nome de cada pino antes de ligar os fios.</figcaption>
           </figure>
           <h3 class="ligacoes-titulo">Ligações</h3>
           <ul class="ligacoes">
-            <li><strong>Perna maior</strong> → GND</li>
+            <li><strong>Perna maior</strong> → 5V (não vai no GND!)</li>
             <li><strong>R</strong> → resistor → pino 5</li>
             <li><strong>G</strong> → resistor → pino 6</li>
             <li><strong>B</strong> → resistor → pino 3</li>
@@ -259,10 +264,12 @@ void setup() {
   pescoco.attach(pinoPescoco);
 }
 
+// LED de ânodo comum: a perna maior vai no 5V
+// e cada cor acende com LOW. O ! inverte: 1 vira LOW.
 void cor(int r, int g, int b) {
-  digitalWrite(vermelho, r);
-  digitalWrite(verde, g);
-  digitalWrite(azul, b);
+  digitalWrite(vermelho, !r);
+  digitalWrite(verde, !g);
+  digitalWrite(azul, !b);
 }
 
 void loop() {
@@ -286,7 +293,7 @@ void loop() {
           <p class="small" role="status"></p>
           <div class="side-callout">
             <strong>O que tem de novo?</strong>
-            <p>A função <code>cor(r, g, b)</code> mistura vermelho, verde e azul: <code>1</code> liga a cor e <code>0</code> desliga. Usamos liga e desliga porque o buzzer e o servo atrapalham o <code>analogWrite()</code> em alguns pinos.</p>
+            <p>A função <code>cor(r, g, b)</code> mistura vermelho, verde e azul: <code>1</code> liga a cor e <code>0</code> desliga. Como a perna maior vai no 5V, cada cor acende com <code>LOW</code>; o <code>!</code> inverte o número para você não precisar pensar nisso. Usamos liga e desliga porque o buzzer e o servo atrapalham o <code>analogWrite()</code> em alguns pinos.</p>
           </div>
           <p class="small"><strong>Experimente:</strong> Tente <code>cor(1, 1, 0)</code> e <code>cor(1, 0, 1)</code>. Que cores aparecem?</p>
         </section>
@@ -294,7 +301,7 @@ void loop() {
           <p class="etiqueta-componente">Sensor de presença (HC-SR501)</p>
           <h2>A Ardunina percebe quem passa</h2>
           <p class="pecas">Peças: sensor de presença HC-SR501, LEDs (D4 e D7), buzzer (D9) e servo (D11)</p>
-          <p class="muted">Quando alguém se mexe perto dela, os olhos acendem, ela apita e vira o pescoço.</p>
+          <p class="muted">Quando alguém chega perto, ela apita uma vez. Enquanto a pessoa estiver ali, os olhos ficam acesos e a cabeça balança.</p>
           <figure class="foto-componente">
             <img src="img/componentes/presenca.png" alt="Desenho do sensor de presença com os pinos VCC, OUT e GND" width="560" height="560" loading="lazy" />
             <figcaption>Confira o nome de cada pino antes de ligar os fios.</figcaption>
@@ -302,40 +309,72 @@ void loop() {
           <h3 class="ligacoes-titulo">Ligações</h3>
           <ul class="ligacoes">
             <li><strong>VCC</strong> → 5V</li>
-            <li><strong>OUT</strong> → pino 2</li>
+            <li><strong>OUT</strong> → pino 3</li>
             <li><strong>GND</strong> → GND</li>
           </ul>
           <pre class="code" tabindex="0" aria-label="Código: A Ardunina percebe quem passa">#include &lt;Servo.h&gt;
 
-const int sensorPresenca = 2;
+const int sensorPresenca = 3;
 const int olhoEsquerdo = 4;
 const int olhoDireito = 7;
 const int boca = 9;
 const int pinoPescoco = 11;
 
 Servo pescoco;
+bool tinhaAlguem = false;
+
+void olhos(int estado) {
+  digitalWrite(olhoEsquerdo, estado);
+  digitalWrite(olhoDireito, estado);
+}
+
+// Move o pescoço suavemente de um ângulo até outro
+void moverPescoco(int de, int ate) {
+  int passo = (ate &gt; de) ? 1 : -1;
+  for (int a = de; a != ate; a += passo) {
+    pescoco.write(a);
+    delay(8);            // menor = mais rápido
+  }
+  pescoco.write(ate);
+}
 
 void setup() {
+  Serial.begin(9600);
   pinMode(sensorPresenca, INPUT);
   pinMode(olhoEsquerdo, OUTPUT);
   pinMode(olhoDireito, OUTPUT);
   pinMode(boca, OUTPUT);
   pescoco.attach(pinoPescoco);
+  pescoco.write(90);
+
+  Serial.println("Calibrando o sensor... aguarde 30 segundos");
+  delay(30000);
+  Serial.println("Pronto!");
 }
 
 void loop() {
-  int presenca = digitalRead(sensorPresenca);
-  if (presenca == HIGH) {
-    digitalWrite(olhoEsquerdo, HIGH);
-    digitalWrite(olhoDireito, HIGH);
-    tone(boca, 1047, 150);
-    pescoco.write(120);
+  bool temAlguem = digitalRead(sensorPresenca) == HIGH;
+
+  if (temAlguem) {
+    Serial.println("Sensor: TEM GENTE");
+
+    if (!tinhaAlguem) {
+      tone(boca, 1047, 150);   // apita só quando a pessoa chega
+    }
+    olhos(HIGH);
+
+    // Balança a cabeça enquanto tiver alguém
+    moverPescoco(90, 130);
+    moverPescoco(130, 50);
+    moverPescoco(50, 90);
   } else {
-    digitalWrite(olhoEsquerdo, LOW);
-    digitalWrite(olhoDireito, LOW);
+    Serial.println("Sensor: ninguem");
+    olhos(LOW);
     pescoco.write(90);
+    delay(200);
   }
-  delay(300);
+
+  tinhaAlguem = temAlguem;
 }</pre>
           <div class="actions">
             <button type="button" class="btn primary copiar">Copiar código</button>
@@ -344,9 +383,9 @@ void loop() {
           <p class="small" role="status"></p>
           <div class="side-callout">
             <strong>O que tem de novo?</strong>
-            <p>O sensor só responde sim ou não: <code>digitalRead()</code> lê <code>HIGH</code> quando alguém se mexe e <code>LOW</code> quando não tem ninguém. Depois de ligar, espere 1 minuto para ele se ajustar.</p>
+            <p>Duas funções novas: <code>olhos()</code> acende ou apaga os dois olhos de uma vez, e <code>moverPescoco()</code> vira o pescoço grau por grau, para o movimento ficar suave. A variável <code>tinhaAlguem</code> faz ela apitar só quando a pessoa chega. No começo, o código espera 30 segundos para o sensor se ajustar: acompanhe em <strong>Ferramentas → Monitor Serial</strong>.</p>
           </div>
-          <p class="small"><strong>Experimente:</strong> Gire os dois botõezinhos laranja do sensor. Um muda a distância e o outro, quanto tempo ele fica em <code>HIGH</code>.</p>
+          <p class="small"><strong>Experimente:</strong> Mude o <code>delay(8)</code> dentro de <code>moverPescoco()</code>. Com um número menor, a cabeça balança mais rápido. Os dois botõezinhos laranja do sensor ajustam a distância e quanto tempo ele fica em <code>HIGH</code>.</p>
         </section>
       </div>
     </main>
